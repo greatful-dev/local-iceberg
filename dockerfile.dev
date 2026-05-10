@@ -1,0 +1,5 @@
+FROM apache/polaris:latest
+
+ENV POLARIS_PERSISTENCE_TYPE=relational-jdbc
+
+EXPOSE 8181 8182

@@ -1,0 +1,29 @@
+#!/bin/bash
+set -a; source .env.development; set +a
+
+NETWORK_NAME="local-iceberg"
+
+# Purge metastore
+podman run \
+  --network "$NETWORK_NAME" \
+  --env="QUARKUS_DATASOURCE_USERNAME=$QUARKUS_DATASOURCE_USERNAME" \
+  --env="QUARKUS_DATASOURCE_PASSWORD=$QUARKUS_DATASOURCE_PASSWORD" \
+  --env="QUARKUS_DATASOURCE_JDBC_URL=$QUARKUS_DATASOURCE_JDBC_URL" \
+  apache/polaris-admin-tool:latest \
+  purge \
+  -r POLARIS
+
+# Bootstrap metastore
+podman run \
+  --network "$NETWORK_NAME" \
+  --env="POLARIS_PERSISTENCE_TYPE=relational-jdbc" \
+  --env="POLARIS_FEATURES_ALLOW_INSECURE_STORAGE_TYPES=true" \
+  --env="POLARIS_FEATURES_ALLOW_SPECIFYING_FILE_IO_IMPL=true" \
+  --env='POLARIS_FEATURES_SUPPORTED_CATALOG_STORAGE_TYPES=["FILE","S3","GCS","AZURE"]' \
+  --env="QUARKUS_DATASOURCE_USERNAME=$QUARKUS_DATASOURCE_USERNAME" \
+  --env="QUARKUS_DATASOURCE_PASSWORD=$QUARKUS_DATASOURCE_PASSWORD" \
+  --env="QUARKUS_DATASOURCE_JDBC_URL=$QUARKUS_DATASOURCE_JDBC_URL" \
+  apache/polaris-admin-tool:latest \
+  bootstrap \
+  -r POLARIS \
+  -c "POLARIS,$QUARKUS_DATASOURCE_USERNAME,$QUARKUS_DATASOURCE_PASSWORD"

@@ -1,0 +1,5 @@
+.env.development
+.env
+.venv/
+uv.lock
+.ipynb_checkpoints/
