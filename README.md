@@ -14,23 +14,9 @@
     3. Run the SparkSession builder (cell 1/2)
     4. Execute some operations
 
-## Interfacing from networked 3rd party services
-
-```python
-from pyspark.sql import SparkSession
-
-spark = (SparkSession.builder
-    .config("spark.jars.packages", "org.apache.polaris:polaris-spark-3.5_2.13:1.1.0-incubating,org.apache.iceberg:iceberg-aws-bundle:1.10.0,io.delta:delta-spark_2.12:3.3.1,org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.10.0")
-    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-    .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions,io.delta.sql.DeltaSparkSessionExtension")
-    .config("spark.sql.catalog.polaris", "org.apache.polaris.spark.SparkCatalog")
-    .config("spark.sql.catalog.polaris.uri", "http://polaris:8181/api/catalog")
-    .config("spark.sql.catalog.polaris.warehouse", "lakehouse")
-    .config("spark.sql.catalog.polaris.credential", "{client_id}:{client_secret}")
-    .config("spark.sql.catalog.polaris.scope", "PRINCIPAL_ROLE:ALL")
-    .config("spark.sql.catalog.polaris.header.X-Iceberg-Access-Delegation", "vended-credentials")
-    .config("spark.sql.catalog.polaris.token-refresh-enabled", "true")
-    .getOrCreate())
-
-spark.sql(f'''SELECT * FROM iceberg-lake.{some_schema}.{some_table}''')
-```
+4. FastMCP server for allowing agents to interface with local data lake resources
+    1. `scripts/run_mcp.py`
+    2. Configure the MCP with your agent
+        1. Codex: `codex mcp add local-iceberg --url http://localhost:8000/mcp`
+        2. Claude Code: `claude mcp add --transport http local-iceberg http://localhost:8000/mcp`
+    3. Perform standard development workflow. I'm just writing notebooks and running them periodically to refresh source data in this project.
