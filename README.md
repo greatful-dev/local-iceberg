@@ -1,5 +1,24 @@
 # Project Setup
 
+## General requirements:
+
+I developed this project on macos using podman.
+
+- .sh scripts will not work on windows devices
+- not sure if the container networking is docker compatible
+- mapped to a connected SSD to preserve os disk space (details in recommendations section)
+
+### Recommendations
+
+- use [podman](https://podman.io/)
+- map the iceberg file storage to an SSD to preserve your os disk space
+
+```bash
+podman machine stop
+podman machine ssh --volume /Volumes:/Volumes # <-- this is a mac convention, fwiw
+podman machine start
+```
+
 ## Primary Services:
 
 1. Postgres Database for polaris metadata store
