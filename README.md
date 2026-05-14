@@ -21,6 +21,8 @@ podman machine start
 
 ## Primary Services:
 
+To configure an run all (sans notebook environments), you can invoke a correctly sequenced build via `scripts/run_all.sh` from the root directory, which executes the following:
+
 1. Postgres Database for polaris metadata store
     1. `scripts/run_postgres.sh`
 2. Polaris Server for exposing interfaces for Spark Session config
