@@ -1,5 +1,5 @@
 [project]
-name = "local-iceberg"
+name = "local-iceberg-notebook"
 version = "0.1.0"
 description = "Jupyter template for interacting with local lake"
 authors = [{ name = "Mark Brewer", email = "markweldonbrewer@gmail.com" }]
@@ -11,7 +11,7 @@ dependencies = [
     "jupyter>=1.1.1",
     "pandas>=2.3.3",
     "pyarrow>=24.0.0",
-    "pyspark>=4.1.1",
+    "pyspark==3.5.1",
     "zstandard>=0.25.0",
 ]
 
