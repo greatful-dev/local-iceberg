@@ -11,12 +11,16 @@
 3. Python Jupyter notebook environment for interacting with the data lake
     1. Jupyter notebook browser interface
         1. `uv run jupyter notebook`
-        2. Open `example.ipynb`
-        3. Run the SparkSession builder (cell 1/2)
-        4. Execute some operations
+        2. Create your `.ipynb` file under `./notebooks`
+        3. `from utils import get_spark_session`
+        4. `spark = get_spark_session()`
+        5. Execute some operations: `spark.sql(...)`
     2. Native IDE (VSCode/Cursor)
         1. Set kernel to local-iceberg (Python 3.12.7)
-        2. Execute cells
+        2. Create your `.ipynb` file under `./notebooks`
+        3. `from utils import get_spark_session`
+        4. `spark = get_spark_session()`
+        5. Execute some operations: `spark.sql(...)`
 
 4. FastMCP server for allowing agents to interface with local data lake resources
     1. `scripts/run_mcp.sh`
